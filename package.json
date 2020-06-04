@@ -1,5 +1,5 @@
 {
-  "name": "express-php-view-engine",
+  "name": "php",
   "description": "Allows you to use PHP as a view engine for Express applications.",
   "author": "Roosevelt Framework Team <rooseveltframework@gmail.com>",
   "contributors": [
@@ -8,7 +8,7 @@
       "url": "https://github.com/rooseveltframework/express-php-view-engine/graphs/contributors"
     }
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     "index.js",
     "loader.php"
