@@ -17,3 +17,4 @@ If you are a maintainer of this module, please follow the following release proc
 - Open and merge a pull request with those changes.
 - Tag the merge commit as the a new release version number.
 - Publish commit to npm.
+
