@@ -1,20 +1,20 @@
 # express-php-view-engine
 
 [![Build Status](https://github.com/rooseveltframework/express-php-view-engine/workflows/CI/badge.svg
-)](https://github.com/rooseveltframework/express-php-view-engine/actions?query=workflow%3ACI) [![codecov](https://codecov.io/gh/rooseveltframework/express-php-view-engine/branch/master/graph/badge.svg)](https://codecov.io/gh/rooseveltframework/express-php-view-engine) [![npm](https://img.shields.io/npm/v/express-php-view-engine.svg)](https://www.npmjs.com/package/express-php-view-engine)
+)](https://github.com/rooseveltframework/express-php-view-engine/actions?query=workflow%3ACI) [![codecov](https://codecov.io/gh/rooseveltframework/express-php-view-engine/branch/master/graph/badge.svg)](https://codecov.io/gh/rooseveltframework/express-php-view-engine) [![npm](https://img.shields.io/npm/v/php.svg)](https://www.npmjs.com/package/php)
 
 This module allows you to use [PHP](https://php.net) as a templating system for [Express framework](https://expressjs.com) applications. This module was built and is maintained by the [Roosevelt web framework](https://github.com/rooseveltframework/roosevelt) [team](https://github.com/orgs/rooseveltframework/people), but it can be used independently of Roosevelt as well.
 
 ## Usage
 
-First declare `express-php-view-engine` as a dependency in your app.
+First declare `php` as a dependency in your app.
 
 Then set PHP as a view engine in your Express app:
 
 ```js
 const express = require('express')
 const app = express()
-const php = require('express-php-view-engine')
+const php = require('php')
 
 // setup php templating engine
 app.set('views', path.join(__dirname, 'templates'))
@@ -45,12 +45,12 @@ Note: This module presumes that the system you run this on has PHP installed and
 
 ## Configuration
 
-As shown in the above example, `express-php-view-engine` will register values from the Express model as global variables in your PHP script by default. You can disable this behavior if desired two ways:
+As shown in the above example, this module will register values from the Express model as global variables in your PHP script by default. You can disable this behavior if desired two ways:
 
 Disable registering globally:
 
 ```js
-const php = require('express-php-view-engine')
+const php = require('php')
 php.disableRegisterGlobalModel()
 // can be reenabled by calling php.enableRegisterGlobalModel()
 ```
@@ -65,4 +65,3 @@ app.get('/', (req, res) => {
   })
 })
 ```
-
