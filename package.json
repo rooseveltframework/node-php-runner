@@ -23,7 +23,7 @@
   "engineStrict": true,
   "dependencies": {
     "circular": "~1.0.5",
-    "execa": "~5.0.0"
+    "execa": "~5.1.0"
   },
   "devDependencies": {
     "ava": "~3.15.0",
