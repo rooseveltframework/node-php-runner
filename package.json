@@ -18,18 +18,18 @@
   "main": "index.js",
   "readmeFilename": "README.md",
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   },
   "engineStrict": true,
   "dependencies": {
     "circular": "~1.0.5",
-    "execa": "~5.1.0"
+    "execa": "~5.1.1"
   },
   "devDependencies": {
     "ava": "~3.15.0",
-    "c8": "~7.7.1",
-    "codecov": "~3.8.1",
-    "eslint": "~7.29.0",
+    "c8": "~7.7.3",
+    "codecov": "~3.8.2",
+    "eslint": "~7.30.0",
     "eslint-plugin-ava": "~12.0.0",
     "express": "~4.17.1",
     "lint-staged": "~11.0.0",
