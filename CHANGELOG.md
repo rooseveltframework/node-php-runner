@@ -4,6 +4,11 @@
 
 - Put your changes here...
 
+## 1.0.2
+
+- Added TypeScript definitions.
+- Various dependencies bumped.
+
 ## 1.0.1
 
 - Renamed package from `express-php-view-engine` to `php`. Thanks to Elmer Bulthuis for transferring the package name.
