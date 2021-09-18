@@ -31,7 +31,7 @@
     "c8": "~7.8.0",
     "codecov": "~3.8.3",
     "eslint": "~7.32.0",
-    "eslint-plugin-ava": "~12.0.0",
+    "eslint-plugin-ava": "~13.0.0",
     "express": "~4.17.1",
     "lint-staged": "~11.1.1",
     "standard": "~16.0.3",
