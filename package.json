@@ -28,14 +28,14 @@
   },
   "devDependencies": {
     "ava": "~3.15.0",
-    "c8": "~7.9.0",
+    "c8": "~7.10.0",
     "codecov": "~3.8.3",
-    "eslint": "~7.32.0",
+    "eslint": "~8.0.1",
     "eslint-plugin-ava": "~13.0.0",
     "express": "~4.17.1",
-    "lint-staged": "~11.1.1",
-    "standard": "~16.0.3",
-    "supertest": "~6.1.4"
+    "lint-staged": "~11.2.3",
+    "standard": "~16.0.4",
+    "supertest": "~6.1.6"
   },
   "repository": {
     "type": "git",
