@@ -33,7 +33,7 @@
     "eslint": "~8.3.0",
     "eslint-plugin-ava": "~13.0.0",
     "express": "~4.17.1",
-    "lint-staged": "~11.2.3",
+    "lint-staged": "~12.1.0",
     "standard": "~16.0.4",
     "supertest": "~6.1.6"
   },
