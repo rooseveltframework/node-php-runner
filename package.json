@@ -33,7 +33,7 @@
     "eslint": "~8.18.0",
     "eslint-plugin-ava": "~13.2.0",
     "express": "~4.17.3",
-    "standard": "~16.0.4",
+    "standard": "~17.0.0",
     "supertest": "~6.2.2"
   },
   "repository": {
