@@ -1,10 +1,10 @@
-const execa = require('execa')
 const circular = require('circular')
 const path = require('path')
 const settings = {}
 settings.disableRegisterGlobalModel = false
 
 async function render (template, model, callback) {
+  const { execa } = await import('execa')
   model._TEMPLATE = template
   if (typeof model._REGISTER_GLOBAL_MODEL === 'undefined') { // if not overridden by the model
     // then source the setting from the global settings
