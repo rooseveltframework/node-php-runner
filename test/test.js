@@ -19,20 +19,19 @@ const runTest = async (t, endpoint, expected) => {
   server.close();
 }
 
-
-test('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally', async t => {
-  await runTest(t, '/disableRegisterGlobalModelGlobally', '<p></p><p>world</p>');
-});
-
-test('Passing a model variable down from Express to PHP and getting it to render as a registered global', async t => {
+test.serial('Passing a model variable down from Express to PHP and getting it to render as a registered global', async t => {
   await runTest(t, '/defaults', '<p>world</p>');
 });
 
-test('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled at the model level', async t => {
+test.serial('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled at the model level', async t => {
   await runTest(t, '/disableRegisterGlobalModelAtModelLevel', '<p></p><p>world</p>');
 });
 
-test('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally then reenabled', async t => {
+test.serial('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally', async t => {
+  await runTest(t, '/disableRegisterGlobalModelGlobally', '<p></p><p>world</p>');
+});
+
+test.serial('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally then reenabled', async t => {
   await runTest(t, '/disableRegisterGlobalModelGloballyThenReenabled', '<p>world</p><p>world</p>');
 });
 
