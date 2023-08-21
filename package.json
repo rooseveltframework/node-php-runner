@@ -66,5 +66,8 @@
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/kethinov"
+  },
+  "ava": {
+    "timeout": "100s"
   }
 }

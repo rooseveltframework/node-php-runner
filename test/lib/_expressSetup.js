@@ -47,5 +47,5 @@ module.exports = () => {
     })
   })
 
-  return app
+  return { app, php };
 }

@@ -23,11 +23,15 @@ async function render (template, model, callback) {
 }
 
 function disableRegisterGlobalModel () {
+  // console.log('Before Disable: ', settings.disableRegisterGlobalModel)
   settings.disableRegisterGlobalModel = true
+  // console.log('After Disable: ', settings.disableRegisterGlobalModel)
 }
 
 function enableRegisterGlobalModel () {
+  // console.log('Before Enable: ', settings.disableRegisterGlobalModel)
   settings.disableRegisterGlobalModel = false
+  // console.log('After Enable: ', settings.disableRegisterGlobalModel)
 }
 
 module.exports.__express = render
