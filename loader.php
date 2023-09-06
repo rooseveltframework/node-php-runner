@@ -1,4 +1,4 @@
-<?
+<?php
 // get model data from STDIN and decode the JSON into a proper PHP object
 $model = json_decode(stream_get_contents(STDIN));
 
@@ -14,4 +14,3 @@ set_include_path($model->_VIEWS_PATH);
 
 // render the template
 include "$model->_TEMPLATE";
-?>

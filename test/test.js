@@ -13,22 +13,22 @@ test.after(t => {
   t.context.server.close()
 })
 
-test('Passing a model variable down from Express to PHP and getting it to render as a registered global', async t => {
+test.serial('Passing a model variable down from Express to PHP and getting it to render as a registered global', async t => {
   const res = await request(t.context.app).get('/defaults')
   t.true(res.text.includes('<p>world</p>'))
 })
 
-test('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled at the model level', async t => {
+test.serial('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled at the model level', async t => {
   const res = await request(t.context.app).get('/disableRegisterGlobalModelAtModelLevel')
   t.true(res.text.includes('<p></p><p>world</p>'))
 })
 
-test('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally', async t => {
+test.serial('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally', async t => {
   const res = await request(t.context.app).get('/disableRegisterGlobalModelGlobally')
   t.true(res.text.includes('<p></p><p>world</p>'))
 })
 
-test('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally then reenabled', async t => {
+test.serial('Passing a model down from Express to PHP with the _REGISTER_GLOBAL_MODEL feature disabled globally then reenabled', async t => {
   const res = await request(t.context.app).get('/disableRegisterGlobalModelGloballyThenReenabled')
   t.true(res.text.includes('<p>world</p><p>world</p>'))
 })
