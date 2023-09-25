@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Setup PHP Action
-        uses: shivammathur/setup-php@v3
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
           ini-values: short_open_tag=On, error_reporting=E_ALL & ~E_NOTICE
