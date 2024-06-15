@@ -22,6 +22,23 @@ module.exports = () => {
     })
   })
 
+  // route to test the default settings with a callback function
+  app.get('/defaultsWithCallbackFunction', (req, res) => {
+    res.render('basicTest', {
+      hello: 'world'
+    }, (err, html) => {
+      if (err) return
+      res.send(html)
+    })
+  })
+
+  // route to test parsing a template with a coding error
+  app.get('/codingError', (req, res) => {
+    res.render('codingError', {
+      hello: 'world'
+    })
+  })
+
   // route to test disabling registering the model as globals
   app.get('/disableRegisterGlobalModelAtModelLevel', (req, res) => {
     res.render('registerGlobalModelTest', {
