@@ -1,25 +1,48 @@
-const circular = require('circular')
 const path = require('path')
+const { execSync } = require('child_process')
 const settings = {}
 settings.disableRegisterGlobalModel = false
 
-async function render (template, model, callback) {
-  const { execa } = await import('execa')
+function run (script) {
+  try {
+    const stdout = execSync(`php ${path.join(__dirname, script)}`)
+    return stdout.toString()
+  } catch (err) {
+    throw new Error(`PHP process exited with code ${err.status}`)
+  }
+}
+
+function runWithData (template, model) {
+  if (!model) model = {}
   model._TEMPLATE = template
-  if (typeof model._REGISTER_GLOBAL_MODEL === 'undefined') { // if not overridden by the model
-    // then source the setting from the global settings
+  if (typeof model._REGISTER_GLOBAL_MODEL === 'undefined') {
     if (settings.disableRegisterGlobalModel) {
       model._REGISTER_GLOBAL_MODEL = false
     } else {
       model._REGISTER_GLOBAL_MODEL = true
     }
   }
-  model._REGISTER_GLOBAL_MODEL = !!model._REGISTER_GLOBAL_MODEL // force a boolean
-  model._VIEWS_PATH = model.settings.views // pass views path to php
-  const jsonModel = JSON.stringify(model, circular()) // stringify with circular references stripped
-  const { stdout } = await execa('php', [path.join(__dirname, '/loader.php')], { input: jsonModel }) // e.g. php loader.php <<< '["array entry", "another", "etc"]'
-  const renderedTemplate = stdout
-  callback(null, renderedTemplate)
+  model._REGISTER_GLOBAL_MODEL = !!model._REGISTER_GLOBAL_MODEL
+  model._VIEWS_PATH = model?.settings?.views || './'
+  const jsonModel = JSON.stringify(model, circular())
+
+  try {
+    const stdout = execSync(`php ${path.join(__dirname, '/loader.php')}`, {
+      input: jsonModel
+    })
+    return stdout.toString()
+  } catch (err) {
+    throw new Error(`PHP process exited with code ${err.status}`)
+  }
+}
+
+function __express (template, model, callback) {
+  try {
+    const stdout = runWithData(template, model)
+    callback(null, stdout)
+  } catch (err) {
+    callback(err)
+  }
 }
 
 function disableRegisterGlobalModel () {
@@ -30,6 +53,27 @@ function enableRegisterGlobalModel () {
   settings.disableRegisterGlobalModel = false
 }
 
-module.exports.__express = render
+function circular (ref, methods) {
+  ref = ref || '[Circular]'
+  const seen = []
+  return function (key, val) {
+    if (typeof val === 'function' && methods) {
+      val = val.toString()
+    }
+    if (!val || typeof (val) !== 'object') {
+      return val
+    }
+    if (~seen.indexOf(val)) {
+      if (typeof ref === 'function') return ref(val)
+      return ref
+    }
+    seen.push(val)
+    return val
+  }
+}
+
+module.exports.run = run
+module.exports.runWithData = runWithData
+module.exports.__express = __express
 module.exports.disableRegisterGlobalModel = disableRegisterGlobalModel
 module.exports.enableRegisterGlobalModel = enableRegisterGlobalModel

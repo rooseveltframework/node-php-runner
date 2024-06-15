@@ -1,0 +1,4 @@
+<?php
+$hello =
+?>
+<p><?=$hello?></p>

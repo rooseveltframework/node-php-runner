@@ -1,20 +1,20 @@
 {
   "name": "php",
-  "description": "Allows you to use PHP as a view engine for Express applications.",
+  "description": "Allows you to run PHP code in Node.js in various ways.",
   "author": "Roosevelt Framework Team <rooseveltframework@gmail.com>",
   "contributors": [
     {
       "name": "Contributors",
-      "url": "https://github.com/rooseveltframework/express-php-view-engine/graphs/contributors"
+      "url": "https://github.com/rooseveltframework/node-php-runner/graphs/contributors"
     }
   ],
-  "version": "1.0.2",
+  "version": "1.1.0",
   "files": [
     "index.d.ts",
     "index.js",
     "loader.php"
   ],
-  "homepage": "https://github.com/rooseveltframework/express-php-view-engine",
+  "homepage": "https://github.com/rooseveltframework/node-php-runner",
   "license": "CC-BY-4.0",
   "main": "index.js",
   "readmeFilename": "README.md",
@@ -23,22 +23,20 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "circular": "~1.0.5",
-    "execa": "~7.1.1"
   },
   "devDependencies": {
-    "ava": "~6.1.0",
-    "c8": "~9.1.0",
+    "ava": "~6.1.3",
+    "c8": "~10.1.2",
     "codecov": "~3.8.3",
-    "eslint": "~8.56.0",
-    "eslint-plugin-ava": "~14.0.0",
-    "express": "~4.18.2",
+    "eslint": "~9.5.0",
+    "eslint-plugin-ava": "~15.0.1",
+    "express": "~4.19.2",
     "standard": "~17.1.0",
-    "supertest": "~6.3.3"
+    "supertest": "~7.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/rooseveltframework/express-php-view-engine.git"
+    "url": "git://github.com/rooseveltframework/node-php-runner.git"
   },
   "keywords": [
     "Express",
