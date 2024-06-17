@@ -44,17 +44,6 @@
     "php",
     "view engine"
   ],
-  "eslintConfig": {
-    "parserOptions": {
-      "ecmaVersion": 2020
-    },
-    "plugins": [
-      "ava"
-    ],
-    "rules": {
-      "ava/no-only-test": "error"
-    }
-  },
   "scripts": {
     "codecov": "codecov",
     "coverage": "c8 --reporter=text --reporter=lcov ava",

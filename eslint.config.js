@@ -7,6 +7,9 @@ module.exports = [
     },
     plugins: {
       ava
+    },
+    rules: {
+      'ava/no-only-test': 'error'
     }
   }
 ]
