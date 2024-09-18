@@ -30,7 +30,7 @@
     "codecov": "~3.8.3",
     "eslint": "~9.8.0",
     "eslint-plugin-ava": "~15.0.1",
-    "express": "~4.19.2",
+    "express": "~4.21.0",
     "standard": "~17.1.0",
     "supertest": "~7.0.0"
   },
