@@ -1,6 +1,6 @@
 {
   "name": "php",
-  "description": "Allows you to run PHP code in Node.js in various ways.",
+  "description": "🐘 Allows you to run PHP code in Node.js in various ways.",
   "author": "Roosevelt Framework Team <rooseveltframework@gmail.com>",
   "contributors": [
     {
@@ -24,14 +24,11 @@
   "dependencies": {
   },
   "devDependencies": {
-    "ava": "~6.1.3",
-    "c8": "~10.1.2",
-    "codecov": "~3.8.3",
-    "eslint": "~9.16.0",
-    "eslint-plugin-ava": "~15.0.1",
-    "express": "~4.21.0",
-    "standard": "~17.1.0",
-    "supertest": "~7.0.0"
+    "ava": "6.2.0",
+    "c8": "10.1.3",
+    "express": "4.21.2",
+    "standard": "17.1.2",
+    "supertest": "7.0.0"
   },
   "repository": {
     "type": "git",
@@ -44,9 +41,8 @@
     "view engine"
   ],
   "scripts": {
-    "codecov": "codecov",
     "coverage": "c8 --reporter=text --reporter=lcov ava",
-    "lint": "standard && eslint test/test.js",
+    "lint": "standard",
     "test": "ava"
   },
   "funding": "https://www.paypal.com/donate/?hosted_button_id=2L2X8GRXZCGJ6"

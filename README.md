@@ -1,7 +1,7 @@
 # node-php-runner
 
 [![Build Status](https://github.com/rooseveltframework/express-php-view-engine/workflows/CI/badge.svg
-)](https://github.com/rooseveltframework/express-php-view-engine/actions?query=workflow%3ACI) [![codecov](https://codecov.io/gh/rooseveltframework/express-php-view-engine/branch/master/graph/badge.svg)](https://codecov.io/gh/rooseveltframework/express-php-view-engine) [![npm](https://img.shields.io/npm/v/php.svg)](https://www.npmjs.com/package/php)
+)](https://github.com/rooseveltframework/express-php-view-engine/actions?query=workflow%3ACI) [![npm](https://img.shields.io/npm/v/php.svg)](https://www.npmjs.com/package/php)
 
 This module allows you to run [PHP](https://php.net) code in Node.js in various ways:
 
@@ -97,7 +97,7 @@ app.get('/', (req, res) => {
 Disable registering on a per render basis in `runWithData` (though if you're doing this, you probably should just use `php.run()` instead, as that method was written to use simpler logic that doesn't support passing data to PHP):
 
 ```js
-const output = await php.runWithData('some_php_script.php', { 
+const output = await php.runWithData('some_php_script.php', {
   _REGISTER_GLOBAL_MODEL: false,
   hello: 'world'
 })
