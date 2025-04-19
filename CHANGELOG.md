@@ -1,9 +1,3 @@
-# Changelog
-
-## Next version
-
-- Put your changes here...
-
 ## 1.1.0
 
 - Added `run` and `runWithData` methods so this module can be used as a general purpose PHP runner.
