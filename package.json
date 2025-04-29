@@ -12,7 +12,8 @@
   "files": [
     "index.d.ts",
     "index.js",
-    "loader.php"
+    "loader.php",
+    "*.md"
   ],
   "homepage": "https://github.com/rooseveltframework/node-php-runner",
   "license": "CC-BY-4.0",
