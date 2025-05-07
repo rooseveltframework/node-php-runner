@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/php.svg)](https://www.npmjs.com/package/php)
+🐘 **php** [![npm](https://img.shields.io/npm/v/php.svg)](https://www.npmjs.com/package/php)
 
 This module allows you to run [PHP](https://php.net) code in Node.js in various ways:
 
