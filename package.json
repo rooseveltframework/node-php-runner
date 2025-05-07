@@ -15,7 +15,7 @@
     "loader.php",
     "*.md"
   ],
-  "homepage": "https://github.com/rooseveltframework/node-php-runner",
+  "homepage": "https://rooseveltframework.org/docs/node-php-runner/latest",
   "license": "CC-BY-4.0",
   "main": "index.js",
   "readmeFilename": "README.md",
