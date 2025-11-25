@@ -12,6 +12,6 @@ This module was built and is maintained by the [Roosevelt web framework](https:/
   <summary>Documentation</summary>
   <ul>
     <li><a href="./USAGE.md">Usage</a></li>
-    <li><a href="./CONFIGURATION.md">CONFIGURATION</a></li>
+    <li><a href="./CONFIGURATION.md">Configuration</a></li>
   </ul>
 </details>
