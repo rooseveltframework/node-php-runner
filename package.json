@@ -25,7 +25,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "ava": "7.0.0",
+    "ava": "8.0.1",
     "c8": "11.0.0",
     "express": "5.2.1",
     "standard": "17.1.2",
