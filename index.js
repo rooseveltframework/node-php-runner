@@ -1,11 +1,13 @@
 const path = require('path')
-const { execSync } = require('child_process')
+const { execFileSync } = require('child_process')
 const settings = {}
 settings.disableRegisterGlobalModel = false
 
 function run (script) {
+  const safeScript = path.basename(script)
+  const scriptPath = `${__dirname}${path.sep}${safeScript}`
   try {
-    const stdout = execSync(`php ${path.join(__dirname, script)}`)
+    const stdout = execFileSync('php', [scriptPath])
     return stdout.toString()
   } catch (err) {
     throw new Error(`PHP process exited with code ${err.status}`)
@@ -27,7 +29,7 @@ function runWithData (template, model) {
   const jsonModel = JSON.stringify(model, circular())
 
   try {
-    const stdout = execSync(`php ${path.join(__dirname, '/loader.php')}`, {
+    const stdout = execFileSync('php', [path.join(__dirname, '/loader.php')], {
       input: jsonModel
     })
     return stdout.toString()
