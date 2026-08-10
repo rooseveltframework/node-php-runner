@@ -4,8 +4,7 @@ const settings = {}
 settings.disableRegisterGlobalModel = false
 
 function run (script) {
-  const safeScript = path.basename(script)
-  const scriptPath = `${__dirname}${path.sep}${safeScript}`
+  const scriptPath = path.join(__dirname, script)
   try {
     const stdout = execFileSync('php', [scriptPath])
     return stdout.toString()

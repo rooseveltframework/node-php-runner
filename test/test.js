@@ -34,6 +34,14 @@ test.serial('Executing a PHP script that has a coding error with `run`', async t
   }
 })
 
+test.serial('Shell metacharacters in the script path are not executed as shell commands', async t => {
+  try {
+    await php.run('./test/lib/templates/selfContainedTest.php; echo pwned')
+  } catch (e) {
+    t.true(e.message.includes('PHP process exited with code'))
+  }
+})
+
 test.serial('Executing a PHP script that has a coding error with `runWithData`', async t => {
   try {
     await php.runWithData('./test/lib/templates/codingError.php')
