@@ -1,3 +1,4 @@
+const fs = require('node:fs')
 const php = require('../index')
 const request = require('supertest')
 const test = require('ava').default
@@ -77,9 +78,10 @@ test.serial('Executing PHP code from memory with `runCodeWithData` preserves lea
 })
 
 test.serial('Executing PHP code from memory with `runCodeWithData` renders identically to the same source in a file', t => {
-  const source = '\n<p><?=$hello?></p>\n'
+  const template = './test/lib/templates/leadingWhitespaceTest.php'
+  const source = fs.readFileSync(template, 'utf8')
   const fromMemory = php.runCodeWithData(source, { hello: 'world' })
-  const fromFile = php.runWithData('./test/lib/templates/leadingWhitespaceTest.php', { hello: 'world' })
+  const fromFile = php.runWithData(template, { hello: 'world' })
   t.is(fromMemory, fromFile)
 })
 
