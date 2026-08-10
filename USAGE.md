@@ -4,20 +4,48 @@ To use this module, you must have PHP installed and in your PATH.
 
 ```javascript
 const php = require('php')
-const output = await php.run('some_php_script.php')
+const output = php.run('some_php_script.php')
 ```
 
 ## Run a PHP script in Node.js and pass it data
 
 ```javascript
 const php = require('php')
-const output = await php.runWithData('some_php_script.php', { hello: 'world' })
+const output = php.runWithData('some_php_script.php', { hello: 'world' })
 ```
 
 Then, assuming your `some_php_script.php` file looks like this:
 
 ```php
 <p><?=$hello?></p>
+```
+
+The output will be:
+
+```html
+<p>world</p>
+```
+
+## Run PHP code from memory in Node.js
+
+If you have PHP code in a string rather than in a file, you can execute it without writing it to disk first:
+
+```javascript
+const php = require('php')
+const output = php.runCode('<?php echo "<p>world</p>"; ?>')
+```
+
+Like a PHP file, the code can mix HTML and PHP:
+
+```javascript
+const output = php.runCode('<?php $hello = "world"; ?><p><?=$hello?></p>')
+```
+
+## Run PHP code from memory in Node.js and pass it data
+
+```javascript
+const php = require('php')
+const output = php.runCodeWithData('<p><?=$hello?></p>', { hello: 'world' })
 ```
 
 The output will be:

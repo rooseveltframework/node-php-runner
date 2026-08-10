@@ -1,3 +1,12 @@
+## 1.2.0
+
+- Added `runCode` and `runCodeWithData` methods so PHP code can be executed from memory instead of from a file.
+- Hardened input handling to prevent command injection.
+- Altered thrown error message to include PHP error output instead of being written directly to stderr.
+- Altered error thrown when failing to start PHP at all. It now reports the underlying spawn error instead of `PHP process exited with code undefined`.
+- Added TypeScript definitions for `run` and `runWithData`, which were previously missing.
+- Updated various dependencies.
+
 ## 1.1.0
 
 - Added `run` and `runWithData` methods so this module can be used as a general purpose PHP runner.
