@@ -64,5 +64,26 @@ module.exports = () => {
     })
   })
 
+  // route to test a template that takes the whole PHP process down with it
+  app.get('/killsTheWorker', (req, res) => {
+    res.render('killsTheWorker', {})
+  })
+
+  // routes to test that one render cannot see what an earlier one left behind
+  app.get('/leakSetter', (req, res) => {
+    res.render('leakSetter', {})
+  })
+
+  app.get('/leakReader', (req, res) => {
+    res.render('leakReader', {})
+  })
+
+  // express prints the stack of any 500 it serves, and two of these routes fail on purpose, so the
+  // test output would carry stack traces that mean nothing. the message still reaches the response,
+  // which is what the tests read
+  app.use((err, req, res, next) => {
+    res.status(500).send('Error: ' + err.message)
+  })
+
   return app
 }

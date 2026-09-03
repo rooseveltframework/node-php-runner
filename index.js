@@ -1,7 +1,9 @@
 const path = require('path')
 const { spawnSync } = require('child_process')
+const pool = require('./pool')
 const settings = {}
-settings.disableRegisterGlobalModel = false
+// whether a model's keys become variables the template can read. stored as what it is rather than as its opposite, so that reading it does not need untangling
+settings.registerGlobalModel = true
 
 function execPhp (args, input) {
   const result = spawnSync('php', args, { input })
@@ -31,64 +33,80 @@ function runCode (code) {
 }
 
 function runWithData (template, model) {
-  if (!model) model = {}
-  model._TEMPLATE = template
-  return runLoader(model)
+  return runLoader(model, { template })
 }
 
 function runCodeWithData (code, model) {
-  if (!model) model = {}
-  model._TEMPLATE_SOURCE = code
-  return runLoader(model)
+  return runLoader(model, { source: code })
 }
 
-function runLoader (model) {
-  if (typeof model._REGISTER_GLOBAL_MODEL === 'undefined') {
-    if (settings.disableRegisterGlobalModel) {
-      model._REGISTER_GLOBAL_MODEL = false
-    } else {
-      model._REGISTER_GLOBAL_MODEL = true
-    }
+// hands one template and one model to loader.php, as a request that wraps the model rather than adding to it
+//
+// what the loader needs to know used to be written into the model itself, which meant a caller got their own object back with three of this module's keys added to it, and meant a model with a key of its own called `model` took the loader down with it. it now travels beside the model instead
+function runLoader (model, what) {
+  model = model || {}
+  const request = {
+    ...what,
+    registerGlobalModel: registerGlobalModel(model),
+    viewsPath: model?.settings?.views || './',
+    model
   }
-  model._REGISTER_GLOBAL_MODEL = !!model._REGISTER_GLOBAL_MODEL
-  model._VIEWS_PATH = model?.settings?.views || './'
-  const jsonModel = JSON.stringify(model, circular())
-
-  return execPhp([path.join(__dirname, '/loader.php')], jsonModel)
+  return execPhp([path.join(__dirname, '/loader.php')], JSON.stringify(request, circular()))
 }
 
+// express hands a view engine a callback rather than expecting a return value, so a render can be answered by a php process that is already running instead of by one started for the occasion
+//
+// that is worth a great deal: starting php costs several milliseconds and rendering a template costs a fraction of one, so most of what a render used to cost was not the render. the workers also keep php's opcode cache warm, so a template is compiled once rather than once per render
 function __express (template, model, callback) {
-  try {
-    const stdout = runWithData(template, model)
-    callback(null, stdout)
-  } catch (err) {
-    callback(err)
+  if (!pool.settings.enabled) {
+    try {
+      callback(null, runWithData(template, model))
+    } catch (err) {
+      callback(err)
+    }
+    return
   }
+
+  if (!model) model = {}
+  pool
+    .render(template, model, model?.settings?.views || './', registerGlobalModel(model))
+    .then(markup => callback(null, markup))
+    .catch(callback)
+}
+
+// whether the model's keys should become variables the template can read, which the model may decide for itself and otherwise follows the module wide setting
+function registerGlobalModel (model) {
+  if (typeof model._REGISTER_GLOBAL_MODEL !== 'undefined') return !!model._REGISTER_GLOBAL_MODEL
+  return settings.registerGlobalModel
 }
 
 function disableRegisterGlobalModel () {
-  settings.disableRegisterGlobalModel = true
+  settings.registerGlobalModel = false
 }
 
 function enableRegisterGlobalModel () {
-  settings.disableRegisterGlobalModel = false
+  settings.registerGlobalModel = true
 }
 
-function circular (ref, methods) {
-  ref = ref || '[Circular]'
-  const seen = []
+// json cannot describe a value that contains itself, so one that does is replaced rather than followed
+//
+// what makes a value circular is that it is already on the path from the root down to where it is being written, which is not the same as it having been written somewhere before. a model is perfectly entitled to hold the same object in two places, and both of those should be written out in full: a featured product that also appears in a list of products is one object, not a loop
+//
+// this used to remember every object it had ever written and replace any repeat, so the second place a shared object appeared received the replacement string instead of the object. keeping only the ancestors also means the check is against the depth of the model rather than its size
+function circular () {
+  const ancestors = []
   return function (key, val) {
-    if (typeof val === 'function' && methods) {
-      val = val.toString()
-    }
-    if (!val || typeof (val) !== 'object') {
+    if (!val || typeof val !== 'object') {
       return val
     }
-    if (~seen.indexOf(val)) {
-      if (typeof ref === 'function') return ref(val)
-      return ref
+    // `this` is the object val is being written into, so anything still on the stack below it belongs to a branch that has already been finished and is no longer an ancestor of val
+    while (ancestors.length && ancestors[ancestors.length - 1] !== this) {
+      ancestors.pop()
     }
-    seen.push(val)
+    if (ancestors.includes(val)) {
+      return '[Circular]'
+    }
+    ancestors.push(val)
     return val
   }
 }
@@ -100,3 +118,5 @@ module.exports.runCodeWithData = runCodeWithData
 module.exports.__express = __express
 module.exports.disableRegisterGlobalModel = disableRegisterGlobalModel
 module.exports.enableRegisterGlobalModel = enableRegisterGlobalModel
+module.exports.configureWorkers = pool.configure
+module.exports.stopWorkers = pool.shutdown
