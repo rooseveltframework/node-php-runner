@@ -1,22 +1,28 @@
 <?php
-// get model data from STDIN and decode the JSON into a proper PHP object
-$model = json_decode(stream_get_contents(STDIN));
+// runs one template and exits, for the synchronous methods
+//
+// the request arrives as JSON on stdin and carries the template to run, the model to run it against, and where to look for anything the template includes. worker.php answers a request of the same shape, and differs in staying alive to answer more of them and in rendering each one in a scope of its own; this runs a single template at the top level of the script and stops
 
-// declare global variables for each model variable (if the setting to do so is enabled)
-if ($model->_REGISTER_GLOBAL_MODEL) {
-  foreach ($model as $key => $value) {
-    $$key = $value;
+// everything this needs to know is read before the model is unpacked, because unpacking it defines whatever names the model happens to carry. a model with a key called `model` used to overwrite the variable this was reading its own settings out of, and took the render down with it
+$phpRunnerRequest = json_decode(stream_get_contents(STDIN));
+$phpRunnerSource = $phpRunnerRequest->source ?? null;
+$phpRunnerTemplate = $phpRunnerRequest->template ?? null;
+$phpRunnerRegister = !empty($phpRunnerRequest->registerGlobalModel);
+
+set_include_path($phpRunnerRequest->viewsPath);
+
+// the whole model under one name, and then a name per key if the request asked for that. this happens at the top level of the script, so those are globals, and so is anything the template goes on to define
+$model = $phpRunnerRequest->model;
+
+if ($phpRunnerRegister) {
+  foreach ($phpRunnerRequest->model as $phpRunnerKey => $phpRunnerValue) {
+    $$phpRunnerKey = $phpRunnerValue;
   }
 }
 
-// add express templates path to php includes path
-set_include_path($model->_VIEWS_PATH);
-
-// render the template, either from source held in memory or from a file
-if (isset($model->_TEMPLATE_SOURCE)) {
-  // the closing tag prefix drops into inline html mode so the source parses like a template file would
-  // the newline after it is padding: php swallows one newline following a closing tag, so this absorbs the swallow and leaves leading whitespace in the source intact
-  eval('?>' . "\n" . $model->_TEMPLATE_SOURCE);
+if ($phpRunnerSource !== null) {
+  // the closing tag prefix drops into inline html mode so the source parses like a template file would the newline after it is padding: php swallows one newline following a closing tag, so this absorbs the swallow and leaves leading whitespace in the source intact
+  eval('?>' . "\n" . $phpRunnerSource);
 } else {
-  include "$model->_TEMPLATE";
+  include $phpRunnerTemplate;
 }

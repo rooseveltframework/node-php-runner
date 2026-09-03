@@ -8,11 +8,13 @@
       "url": "https://github.com/rooseveltframework/node-php-runner/graphs/contributors"
     }
   ],
-  "version": "1.2.0",
+  "version": "2.0.0",
   "files": [
     "index.d.ts",
     "index.js",
     "loader.php",
+    "pool.js",
+    "worker.php",
     "*.md"
   ],
   "homepage": "https://rooseveltframework.org/docs/node-php-runner/latest",
@@ -20,15 +22,12 @@
   "main": "index.js",
   "readmeFilename": "README.md",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
   "dependencies": {},
   "devDependencies": {
-    "ava": "8.0.1",
-    "c8": "12.0.0",
     "express": "5.2.1",
-    "standard": "17.1.2",
-    "supertest": "7.2.2"
+    "standard": "17.1.2"
   },
   "repository": {
     "type": "git",
@@ -41,9 +40,9 @@
     "view engine"
   ],
   "scripts": {
-    "coverage": "c8 --reporter=text --reporter=lcov ava",
+    "coverage": "node --test --experimental-test-coverage test/*.js",
     "lint": "standard",
-    "test": "ava"
+    "test": "node --test test/*.js"
   },
   "funding": "https://www.paypal.com/donate/?hosted_button_id=2L2X8GRXZCGJ6"
 }

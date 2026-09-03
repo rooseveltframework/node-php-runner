@@ -1,3 +1,13 @@
+## 2.0.0
+
+- Improved performance considerably in several places.
+- Added `configureWorkers` to set how many PHP processes to keep, whether PHP rechecks a template on disk before reusing its compiled form, and whether to use worker processes at all. Added `stopWorkers` to stop them. See CONFIGURATION.md.
+- Added `trimModel` param, on by default. Model trimming is a performance optimization, but you can turn it off if you see buggy behavior.
+- Added a memory limit for the PHP processes, defaulting to 256 MB. PHP's command line runtime has none of its own, so a template that ran away would keep taking memory until the operating system killed something, which need not have been PHP. It is now the render that fails, and the worker is replaced. Added `memoryLimit` to `configureWorkers` to change it or turn it off.
+- Fixed some ambiguous errors and improved stability.
+- Fixed overly aggressive handling of circular references in model data.
+- Updated various dependencies.
+
 ## 1.2.0
 
 - Added `runCode` and `runCodeWithData` methods so PHP code can be executed from memory instead of from a file.

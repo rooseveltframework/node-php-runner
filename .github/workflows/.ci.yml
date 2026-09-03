@@ -4,6 +4,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false # show all CI failures rather than stopping CI on first failure
       matrix:
         node-version: [22.x, 24.x, 26.x]
         php-versions: ['8.2', '8.3', '8.4','8.5']
